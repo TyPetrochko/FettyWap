@@ -1,9 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'tweet_source/name:string'
-
-  get 'tweet_source/bio:text'
-
   resources :tweets, only: [:index, :create, :show]
 
   # The priority is based upon order of creation: first created -> highest priority.
