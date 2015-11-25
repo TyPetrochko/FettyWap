@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :tweet_sources, only: [:index, :show]
+
   resources :tweets, only: [:index, :create, :show]
 
   # The priority is based upon order of creation: first created -> highest priority.
