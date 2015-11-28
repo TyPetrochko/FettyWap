@@ -9,7 +9,7 @@ namespace :ml do
 
     print_yet = false # Wait for ----- line to start printing
 
-    @fetty_trump = TweetSource.find_by(name: "FettyWap")
+    @fetty_trump = TweetSource.find_by(name: "FettyTrump")
     text.each_line do |line|
       line = line.strip
       if print_yet && !line.empty?
@@ -28,7 +28,7 @@ namespace :ml do
 
   desc "Clear all Fetty Wap's tweets"
   task clear: :environment do
-    @fetty_trump = TweetSource.find_by(name: "FettyWap")
+    @fetty_trump = TweetSource.find_by(name: "FettyTrump")
     Tweet.where('tweet_source_id = ?', @fetty_trump.id).each do |tweet|
       text = tweet.text
       if(tweet.destroy)
