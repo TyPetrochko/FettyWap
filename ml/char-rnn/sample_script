@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+cd ml/char-rnn/
+th sample.lua cv/lm_lstm_epoch50.00_1.7075.t7
