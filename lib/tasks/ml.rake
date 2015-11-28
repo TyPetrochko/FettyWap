@@ -4,7 +4,7 @@ namespace :ml do
   desc "Feed database with relevant tweets"
   task feed: :environment do
     seed = DateTime.now.strftime('%Q')
-    text = `cd ml/char-rnn && th sample.lua \
+    text = `cd ml/char-rnn && ~/torch/install/bin/th sample.lua \
             cv/lm_lstm_epoch50.00_1.7075.t7 -seed #{seed}`
 
     print_yet = false # Wait for ----- line to start printing
