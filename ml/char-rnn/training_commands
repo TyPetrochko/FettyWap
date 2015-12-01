@@ -1,0 +1,1 @@
+th train.lua -data_dir data/fetty_trump/ -rnn_size 256 -seq_length 100 -batch_size 100 -max_epochs 75
