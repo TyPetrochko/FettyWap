@@ -1,25 +1,14 @@
-<h1>Tweet Channels!</h1>
-<h3>Click a tweet channel to let the fun begin</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>
-        Channel name
-      </th>
-      <th>
-        Description/Bio
-      </th>
-    </tr>
-  <thead>
-
-  <tbody>
+<div class="inner">
+  <h1>Channels</h1>
   <% @tweet_sources.each do |ts| %>
-    <tr>
-      <td><%= link_to ts.name, ts %> </td>
-      <td><%= ts.bio %> </td>
-    </tr>
+    <% url = url_for(controller: 'tweet_sources', action: 'show', id: ts.id) %>
+    <div class="channel-container" onclick="location.href=<%= "'#{url[1..-1]}';\"".html_safe%>>
+      <%= image_tag "fetty.jpg", class: "channel-image-left" %>
+      <%= image_tag "trump.jpg", class: "channel-image-right" %>
+      <a class="channel-mashup-name"><%="@#{ts.name}"%></a>
+      <p class="channel-mashup-bio"><%="#{ts.bio}"%></p>
+      <a class="channel-chevron fa fa-chevron-right"></a>
+    </div>
   <% end %>
-  </tbody>
-</table>
+</div>
 

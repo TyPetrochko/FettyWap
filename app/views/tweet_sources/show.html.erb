@@ -1,28 +1,75 @@
-<h1><%= @tweet_source.name %>'s Tweets!</h1>
-<p><%= @tweet_source.bio %> </p>
+<div class = "inner">
+<h1>@<%= @tweet_source.name %></h1>
+<div class="profile-mashup-container">
+    <%= image_tag "fetty.jpg", class: "profile-header-pic profile-header-pic-left"  %>
+    <h2 class="profile-name profile-name-left">FettyWap1738</h2>
+    <h3 class="profile-link profile-link-left"><a href="http://twitter.com/fettywap">@fettywap</a></h3>
+    <p class="profile-bio profile-bio-left">Here is a bio. This is a block of text that could take up some amount of space.</p>
 
-<table>
-  <thead>
-    <tr>
-      <th>
-        Added
-      </th>
-      <th>
-        Tweet
-      </th>
-    </tr>
-  <thead>
+    <img src="trump.jpg" class="profile-header-pic profile-header-pic-right">
+    <%= image_tag "trump.jpg", class: "profile-header-pic profile-header-pic-right"  %>
+    <h2 class="profile-name profile-name-right">Donald J. Trump</h2>
+    <h3 class="profile-link profile-link-right"><a href="http://twitter.com/realDonaldTrump">@realDonaldTrump</a></h3>
+    <p class="profile-bio profile-bio-right">Here is a bio. This is a block of text that could take up some amount of space.</p>
 
-  <tbody>
-  <% @tweets.each do |tweet| %>
-    <tr>
-      <td><%= tweet.created_at.to_formatted_s(:short) %></td>
-      <td><%= tweet.text %> </td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
+    <div class="profile-mashup-header-divider">
+    </div>
+  </div>
+
+<% @tweets.each do |tweet| %>
+  <div class="tweet-mashup-container">
+    <%= image_tag "fetty.jpg", class: "tweet-image-left"  %>
+    <%= image_tag "trump.jpg", class: "tweet-image-right"  %>
+    <a class="tweet-mashup-name">@<%= @tweet_source.name %></a>
+    <p class="tweet-mashup-text"><%= tweet.text %></p>
+    <!-- Note that these need to have specific IDs. -->
+    <a class="tweet-downvote-button" id= <%="downvote-#{tweet.id}"%>><span class="fa fa-chevron-down"></span></a>
+    <a class="tweet-count" id = <%= "count-#{tweet.id}"%>> <%= tweet.score %></a>
+    <a class="tweet-upvote-button" id= <%= "upvote-#{tweet.id}"%>><span class="fa fa-chevron-up"></span></a>
+  </div>
+<% end %>
+<%= link_to 'All channels', tweet_sources_path %>
+</div>
 
 <br>
-<%= link_to 'All channels', tweet_sources_path %>
+
+<!-- Script for Upvoting and Downvoting -->
+<script type="text/javascript">
+  // Attach the functions to the buttons
+  $(document).ready(function(){
+    $('.tweet-upvote-button').click(function() {
+
+      // grab the id of the button -- which needs to contain the ID of the tweet in the format "upvote-"
+      var longID = $(this).attr('id');
+      var prefix = "upvote-";
+      var tweetID = longID.substr(prefix.length);
+
+      // JQuery Post call here. Add/modify parameters if necessary.
+      var posting = $.post("/upvote/" + tweetID);
+      posting.done(function(data) {
+
+        // this is the completion handler. Increase the count.
+        var count = data["score"];
+        $('#count-' + tweetID).text(count.toString())
+      });
+    });
+
+    $('.tweet-downvote-button').click(function() {
+
+      // grab the id of the button -- which needs to contain the ID of the tweet in the format "downvote-"
+      var longID = $(this).attr('id');
+      var prefix = "downvote-";
+      var tweetID = longID.substr(prefix.length);
+
+      // JQuery Post call here. Add/modify parameters if necessary.
+      var posting = $.post("/downvote/" + tweetID);
+      posting.done(function(data) {
+
+        // this is the completion handler. Decrease the count.
+        var count = data["score"];
+        $('#count-' + tweetID).text(count.toString())
+      });
+    });
+  });
+</script>
 
