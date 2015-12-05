@@ -5,7 +5,7 @@ namespace :ml do
   task feed: :environment do
     seed = DateTime.now.strftime('%Q')
     text = `cd ml/char-rnn && ~/torch/install/bin/th sample.lua \
-            cv/lm_lstm_epoch50.00_1.7075.t7 -seed #{seed}`
+            cv/brain -seed #{seed}`
 
     print_yet = false # Wait for ----- line to start printing
 
@@ -15,6 +15,7 @@ namespace :ml do
       if print_yet && !line.empty?
         # Add this as a tweet
         @new_tweet = Tweet.new
+        @new_tweet.score = 0
         @new_tweet.text = line
         @new_tweet.tweet_source = @fetty_trump
         if(@new_tweet.save)

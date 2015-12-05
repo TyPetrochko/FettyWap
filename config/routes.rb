@@ -4,6 +4,10 @@ Rails.application.routes.draw do
 
   resources :tweets, only: [:index, :create, :show]
 
+  post "/upvote/:id", to: "upvote#upvote"
+
+  post "/downvote/:id", to: "upvote#downvote"
+
   root 'tweet_sources#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
